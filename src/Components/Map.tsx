@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import leaflet from 'leaflet';
 import { HotelType, IAppState } from '../utils/types';
 import { useSelector } from 'react-redux';
+import { LAYER_FOR_MAP } from '../utils/constants';
+import { useHistory } from 'react-router-dom';
 
 interface IProps {
   hotels: HotelType[]
@@ -11,6 +13,7 @@ const Map = (props: IProps) => {
   const {hotels} = props;
   const activeFilter = useSelector<IAppState, string>(state => state.activeFilter);
   const filteredHotels = hotels.filter(hotel => hotel.city.name === activeFilter);
+  const history = useHistory();
 
   useEffect(() => {
     const city: leaflet.LatLngTuple = [filteredHotels[0].city.location.latitude, filteredHotels[0].city.location.longitude];
@@ -28,13 +31,11 @@ const Map = (props: IProps) => {
 
     map.setView(city, zoom);
 
-    leaflet.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, { 
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-      }).addTo(map);
+    leaflet.tileLayer(LAYER_FOR_MAP).addTo(map);
 
     filteredHotels.forEach((hotel) => {
       leaflet.marker([hotel.location.latitude, hotel.location.longitude], {icon}).on('click', () => {
-        document.location.href = `/appartmens/${hotel.id}`
+        history.push(`/appartmens/${hotel.id}`);
       }).addTo(map);
     });
 
@@ -42,7 +43,7 @@ const Map = (props: IProps) => {
       map.remove();
     }
     
-  }, [filteredHotels])
+  }, [filteredHotels, history])
 
   return (
     <div id='map' style={{width: '100%'}}></div>
