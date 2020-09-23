@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import leaflet from 'leaflet';
-import { HotelType, IAppState } from '../utils/types';
-import { useSelector } from 'react-redux';
-import { LAYER_FOR_MAP } from '../utils/constants';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { HotelType, IAppState } from '../utils/types';
+import { LAYER_FOR_MAP } from '../utils/constants';
 
 interface IProps {
   hotels: HotelType[]
@@ -17,10 +18,7 @@ const Map = (props: IProps) => {
 
   useEffect(() => {
     const city: leaflet.LatLngTuple = [filteredHotels[0].city.location.latitude, filteredHotels[0].city.location.longitude];
-    const icon = leaflet.icon({
-      iconUrl: `img/pin.svg`,
-      iconSize: [30, 30]
-    });
+    const icon = leaflet.divIcon({className: 'icon-map'});
 
     const zoom = 12;
     const map = leaflet.map(`map`, {
@@ -38,6 +36,8 @@ const Map = (props: IProps) => {
         history.push(`/appartmens/${hotel.id}`);
       }).addTo(map);
     });
+
+    leaflet.circle([filteredHotels[0].location.latitude, filteredHotels[0].location.longitude], {radius: 2000}).addTo(map);
 
     return () => {
       map.remove();
