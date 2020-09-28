@@ -1,5 +1,5 @@
 import { HotelType, IComment, ThunkActionType } from "../utils/types";
-import { ActionType, FILTER_HOTELS, LOAD_COMMENTS, LOAD_HOTELS, SORT_HOTELS } from "./actionTypes";
+import { ActionType, FILTER_HOTELS, LOAD_COMMENTS, LOAD_HOTELS, SET_AUTH, SORT_HOTELS } from "./actionTypes";
 
 export const loadHotels = (): ThunkActionType => {
   return async (dispatch, getState, api) => {
@@ -16,6 +16,12 @@ export const loadReviews = (id: number): ThunkActionType => {
     dispatch(loadCommentsAction(comments));
   }
 };
+
+export const checkAuth = (): ThunkActionType => {
+  return async (dispatch, getState, api) => {
+    api.get('/login');
+  }
+}
 
 const loadHotelsAction = (hotels: HotelType[]): ActionType => {
   return {
@@ -42,5 +48,12 @@ export const sortHotelsAction = (sortingItem: string): ActionType => {
   return {
     type: SORT_HOTELS,
     payload: sortingItem
+  }
+};
+
+export const setAuthNeed = (flag: boolean): ActionType => {
+  return {
+    type: SET_AUTH,
+    payload: flag
   }
 };

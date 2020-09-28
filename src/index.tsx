@@ -7,8 +7,11 @@ import thunk from "redux-thunk";
 import {Provider} from 'react-redux';
 import { createAPI } from './api';
 import { reducer } from './Store/reducer';
+import { setAuthNeed } from './Store/actions';
 
-const api = createAPI();
+const api = createAPI(() => {
+  store.dispatch(setAuthNeed(true));
+});
 
 const store = createStore(
   reducer,

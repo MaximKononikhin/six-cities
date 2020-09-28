@@ -4,6 +4,7 @@ export const LOAD_HOTELS = 'load-hotels';
 export const LOAD_COMMENTS = 'load-comments';
 export const FILTER_HOTELS = 'filter-hotels';
 export const SORT_HOTELS = 'sort-hotles';
+export const SET_AUTH = 'set-auth';
 
 interface LoadHotelsActionType {
   type: typeof LOAD_HOTELS,
@@ -25,4 +26,11 @@ interface SortHotelsActionType {
   payload: string
 };
 
-export type ActionType = LoadHotelsActionType | LoadCommentsActionType | FilterHotelsActionType | SortHotelsActionType;
+interface SetAuthActionType {
+  type: typeof SET_AUTH,
+  payload: boolean
+};
+
+
+export type ActionType = LoadHotelsActionType | LoadCommentsActionType | FilterHotelsActionType
+ | SortHotelsActionType | SetAuthActionType;

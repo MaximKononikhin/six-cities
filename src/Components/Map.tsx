@@ -37,8 +37,6 @@ const Map = (props: IProps) => {
       }).addTo(map);
     });
 
-    leaflet.circle([filteredHotels[0].location.latitude, filteredHotels[0].location.longitude], {radius: 2000}).addTo(map);
-
     return () => {
       map.remove();
     }

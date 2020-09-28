@@ -1,28 +1,27 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ENTRY_POINT } from './utils/constants';
 
 
 
-export const createAPI = () => {
+export const createAPI = (onUnauthorized: () => void) => {
   const api = axios.create({
     baseURL: ENTRY_POINT
   });
 
-  // const onSuccess = (response: AxiosResponse) => {
-  //   return response;
-  // };
+  const onSuccess = (response: AxiosResponse) => {
+    return response;
+  };
 
-  // const onError = (err: AxiosError) => {
-  //   const {response} = err;
+  const onError = (err: AxiosError) => {
+    const {response} = err;
 
-  //   if (response.status === Error.UNAUTHORIZED) {
-  //     onUnauthorized();
-  //     throw err;
-  //   }
+    if (response?.status === 401) {
+      onUnauthorized();
+    }
 
-  //   throw err;
-  // };
+    throw err;
+  };
 
-  // api.interceptors.response.use(onSuccess, onError);
+  api.interceptors.response.use(onSuccess, onError);
   return api;
 };
