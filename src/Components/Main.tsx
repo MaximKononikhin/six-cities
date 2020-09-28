@@ -4,9 +4,11 @@ import { HotelType, IAppState } from '../utils/types';
 import Filters from './Filters';
 import HotelList from './Hotels-list';
 import Map from './Map';
+import Loader from './Loader';
 
 const Main = () => {
   const hotels = useSelector<IAppState, HotelType[]>(state => state.hotels);
+  const isHotelsLoaded = useSelector<IAppState, boolean>(state => state.isHotelsLoaded);
 
   return (
     <div className="page page--gray page--main">
@@ -14,14 +16,18 @@ const Main = () => {
         <h1 className="visually-hidden">Cities</h1>
           <Filters/>
         <div className="cities">
-          <div className="cities__places-container container">
-            <HotelList hotels={hotels}/>
-            <div className="cities__right-section">
-              {
-                hotels.length > 0 && <Map hotels={hotels}/>
-              }
-            </div>
-          </div>
+          {
+            isHotelsLoaded?
+            <div className="cities__places-container container">
+              <HotelList hotels={hotels}/>
+              <div className="cities__right-section">
+                <Map hotels={hotels}/>
+              </div>
+            </div> 
+            :
+            <Loader/>
+          }
+
         </div>
       </main>
     </div>

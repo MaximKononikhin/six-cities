@@ -5,6 +5,8 @@ export const LOAD_COMMENTS = 'load-comments';
 export const FILTER_HOTELS = 'filter-hotels';
 export const SORT_HOTELS = 'sort-hotles';
 export const SET_AUTH = 'set-auth';
+export const SET_LOGIN_LOADING = 'set-login-loading';
+export const SET_HOTELS_LOADING = 'set-hotels-loading';
 
 interface LoadHotelsActionType {
   type: typeof LOAD_HOTELS,
@@ -31,6 +33,15 @@ interface SetAuthActionType {
   payload: boolean
 };
 
+interface SetLoginLoadingType {
+  type: typeof SET_LOGIN_LOADING,
+  payload: boolean
+};
+
+interface SetHotelsLoadingType {
+  type: typeof SET_HOTELS_LOADING,
+  payload: boolean
+};
 
 export type ActionType = LoadHotelsActionType | LoadCommentsActionType | FilterHotelsActionType
- | SortHotelsActionType | SetAuthActionType;
+ | SortHotelsActionType | SetAuthActionType | SetLoginLoadingType | SetHotelsLoadingType;

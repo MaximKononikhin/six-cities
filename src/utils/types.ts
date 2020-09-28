@@ -56,7 +56,9 @@ export interface IAppState {
   comments: IComment[],
   activeFilter: string,
   activeSorting: string,
-  isAuthNeed: boolean
+  isAuthNeed: boolean,
+  isLoginLoaded: boolean,
+  isHotelsLoaded: boolean
 };
 
 export type ThunkActionType = ThunkAction<Promise<void>, IAppState, AxiosInstance, ActionType>;
