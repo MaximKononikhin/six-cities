@@ -5,6 +5,7 @@ import { checkAuth, loadHotels } from '../Store/actions';
 import { HotelType, IAppState, ThunkDispatchType } from '../utils/types';
 import CardDetails from './Card-details';
 import Header from './Header';
+import LoginPage from './Login-page';
 import Main from './Main';
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
             hotels={hotels.filter(hotel => hotel.city.name === activeFilter)}
           />;
         }}/>
+        <Route path='/login' render={() => <LoginPage/>}/>
       </Switch>
     </Router>
   );

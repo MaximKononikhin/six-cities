@@ -1,10 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IAppState } from '../utils/types';
+import { Link } from 'react-router-dom';
+import { ENTRY_POINT } from '../utils/constants';
+import { IAppState, UserType } from '../utils/types';
 
 const UserLink = () => {
   const isAuthNeed = useSelector<IAppState, boolean>(state => state.isAuthNeed);
   const isLoginLoaded = useSelector<IAppState, boolean>(state => state.isLoginLoaded);
+  const userInfo = useSelector<IAppState, UserType | undefined>(state => state.userInfo)
 
   if (!isLoginLoaded) {
     return null;
@@ -12,13 +15,22 @@ const UserLink = () => {
 
 
   return (
-    <a className="header__nav-link header__nav-link--profile" href="/#">
-      <div className="header__avatar-wrapper user__avatar-wrapper">
-      </div>
+    <div className="header__nav-link header__nav-link--profile">
       {
-        isAuthNeed? <span className="header__login">Sign in</span> : <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+        isAuthNeed? 
+        <>
+          <div className="header__avatar-wrapper user__avatar-wrapper">
+          </div>
+          <Link to='/login' className="header__login">Sign in</Link>
+        </> 
+        :
+        <>
+          <div style={{backgroundImage: `url(${ENTRY_POINT}${userInfo?.avatar_url})`}} className="header__avatar-wrapper user__avatar-wrapper">
+          </div>
+          <span className="header__user-name user__name">{userInfo?.email}</span>
+        </>
       }
-    </a>
+    </div>
   )
 }
 

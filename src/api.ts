@@ -18,8 +18,6 @@ export const createAPI = (onUnauthorized: () => void) => {
     if (response?.status === 401) {
       onUnauthorized();
     }
-
-    throw err;
   };
 
   api.interceptors.response.use(onSuccess, onError);

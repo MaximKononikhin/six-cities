@@ -48,7 +48,12 @@ export interface IComment {
   rating: number,
   comment: string,
   date: string
-}
+};
+
+export interface IUserComment {
+  comment: string,
+  rating: number
+};
 
 
 export interface IAppState {
@@ -58,8 +63,22 @@ export interface IAppState {
   activeSorting: string,
   isAuthNeed: boolean,
   isLoginLoaded: boolean,
-  isHotelsLoaded: boolean
+  isHotelsLoaded: boolean,
+  userInfo?: UserType
 };
+
+export interface LoginType {
+  email: string,
+  password: string
+};
+
+export interface UserType {
+  id: number,
+  email: string,
+  name: string,
+  avatar_url: string,
+  is_pro: boolean
+}
 
 export type ThunkActionType = ThunkAction<Promise<void>, IAppState, AxiosInstance, ActionType>;
 export type ThunkDispatchType = ThunkDispatch<IAppState, AxiosInstance, ActionType>;

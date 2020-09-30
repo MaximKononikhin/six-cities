@@ -1,5 +1,5 @@
-import { HotelType, IComment, ThunkActionType } from "../utils/types";
-import { ActionType, FILTER_HOTELS, LOAD_COMMENTS, LOAD_HOTELS, SET_AUTH, SORT_HOTELS, SET_LOGIN_LOADING, SET_HOTELS_LOADING } from "./actionTypes";
+import { HotelType, IComment, IUserComment, LoginType, ThunkActionType, UserType } from "../utils/types";
+import { ActionType, FILTER_HOTELS, LOAD_COMMENTS, LOAD_HOTELS, SET_AUTH, SORT_HOTELS, SET_LOGIN_LOADING, SET_HOTELS_LOADING, SET_USER_INFO, SEND_USER_REVIEW } from "./actionTypes";
 
 export const loadHotels = (): ThunkActionType => {
   return async (dispatch, getState, api) => {
@@ -23,6 +23,23 @@ export const checkAuth = (): ThunkActionType => {
     api.get('/login').finally(() => {
       dispatch(setLoginLoading(true));
     })
+  }
+}
+
+export const sendLogin = (loginInfo: LoginType):ThunkActionType => {
+  return async (dispatch, getState, api) => {
+    const response = await api.post(`/login`, {
+      email: loginInfo.email,
+      password: loginInfo.password
+    });
+    dispatch(setUserInfoAction(response.data));
+  }
+}
+
+export const sendReview = (userComment: IUserComment, hotelId: number): ThunkActionType => {
+  return async (dispatch, getState, api) => {
+    const response = await api.post(`/comments/${hotelId}`, userComment);
+    console.log(response)
   }
 }
 
@@ -72,5 +89,19 @@ const setHotelsLoading = (flag: boolean): ActionType => {
   return {
     type: SET_HOTELS_LOADING,
     payload: flag
+  }
+};
+
+const setUserInfoAction = (userInfo: UserType): ActionType => {
+  return {
+    type: SET_USER_INFO,
+    payload: userInfo
+  }
+};
+
+const sendUserComment = (userComment: IUserComment): ActionType => {
+  return {
+    type: SEND_USER_REVIEW,
+    payload: userComment
   }
 };

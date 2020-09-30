@@ -1,6 +1,6 @@
 import { CITIES, SORTING_TYPES } from "../utils/constants";
 import { IAppState } from "../utils/types"
-import { ActionType, FILTER_HOTELS, LOAD_COMMENTS, LOAD_HOTELS, SET_AUTH, SORT_HOTELS, SET_LOGIN_LOADING, SET_HOTELS_LOADING } from "./actionTypes";
+import { ActionType, FILTER_HOTELS, LOAD_COMMENTS, LOAD_HOTELS, SET_AUTH, SORT_HOTELS, SET_LOGIN_LOADING, SET_HOTELS_LOADING, SET_USER_INFO } from "./actionTypes";
 
 const inititalState: IAppState = {
   hotels: [],
@@ -9,7 +9,8 @@ const inititalState: IAppState = {
   activeSorting: SORTING_TYPES[0],
   isAuthNeed: false,
   isLoginLoaded: false,
-  isHotelsLoaded: false
+  isHotelsLoaded: false,
+  userInfo: undefined
 };
 
 export const reducer = (state = inititalState, action: ActionType): IAppState => {
@@ -48,13 +49,19 @@ export const reducer = (state = inititalState, action: ActionType): IAppState =>
       return {
         ...state,
         isLoginLoaded: action.payload
-      }
+      };
     
     case SET_HOTELS_LOADING: 
       return {
         ...state,
         isHotelsLoaded: action.payload
-      }
+      };
+
+    case SET_USER_INFO:
+      return {
+        ...state,
+        userInfo: action.payload
+      };
     
     default: return state;
   }

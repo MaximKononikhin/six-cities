@@ -14,6 +14,7 @@ const ReviewsContainer = (props: IProps) => {
   const {id} = props;
   const dispatch = useDispatch<ThunkDispatchType>();
   const comments = useSelector<IAppState, IComment[]>(state => state.comments);
+  const isAuthNeed = useSelector<IAppState, boolean>(state => state.isAuthNeed);
   
   useEffect(() => {
     dispatch(loadReviews(id));
@@ -25,7 +26,7 @@ const ReviewsContainer = (props: IProps) => {
       <ul className="reviews__list">
         {comments.map((comment) => <Review key={comment.id} {...comment}/>)}
       </ul>
-      <NewReview/>
+      {!isAuthNeed? <NewReview hotelId={id}/> : null}
     </section>
   )
 }
