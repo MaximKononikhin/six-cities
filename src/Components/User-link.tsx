@@ -7,7 +7,7 @@ import { IAppState, UserType } from '../utils/types';
 const UserLink = () => {
   const isAuthNeed = useSelector<IAppState, boolean>(state => state.isAuthNeed);
   const isLoginLoaded = useSelector<IAppState, boolean>(state => state.isLoginLoaded);
-  const userInfo = useSelector<IAppState, UserType | undefined>(state => state.userInfo)
+  const userInfo = useSelector<IAppState, UserType | null>(state => state.userInfo)
 
   if (!isLoginLoaded) {
     return null;

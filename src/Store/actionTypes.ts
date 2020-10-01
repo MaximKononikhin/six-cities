@@ -1,4 +1,4 @@
-import { HotelType, IComment, IUserComment, UserType } from "../utils/types";
+import { HotelType, IComment, UserType } from "../utils/types";
 
 export const LOAD_HOTELS = 'load-hotels';
 export const LOAD_COMMENTS = 'load-comments';
@@ -8,7 +8,6 @@ export const SET_AUTH = 'set-auth';
 export const SET_LOGIN_LOADING = 'set-login-loading';
 export const SET_HOTELS_LOADING = 'set-hotels-loading';
 export const SET_USER_INFO = 'set-user-info';
-export const SEND_USER_REVIEW = 'send-user-review';
 
 interface LoadHotelsActionType {
   type: typeof LOAD_HOTELS,
@@ -50,10 +49,5 @@ interface SetUserInfoType {
   payload: UserType
 };
 
-interface SendUserReviewType {
-  type: typeof SEND_USER_REVIEW,
-  payload: IUserComment
-};
-
 export type ActionType = LoadHotelsActionType | LoadCommentsActionType | FilterHotelsActionType
- | SortHotelsActionType | SetAuthActionType | SetLoginLoadingType | SetHotelsLoadingType |SetUserInfoType | SendUserReviewType;
+ | SortHotelsActionType | SetAuthActionType | SetLoginLoadingType | SetHotelsLoadingType |SetUserInfoType;

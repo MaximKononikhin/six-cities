@@ -10,12 +10,12 @@ interface IProps {
 const NewReview = (props: IProps) => {
   const {hotelId} = props;
 
-  const [userRaing, setUserRating] = useState(0);
+  const [userRaing, setUserRating] = useState('0');
   const [userComment, setUserComment] = useState('');
   const dispatch = useDispatch<ThunkDispatchType>();
 
   const validate = (): boolean => {
-    if (userRaing > 0 && userComment.length > 50) {
+    if (+userRaing > 0 && userComment.length > 50) {
       return false
     }
     return true;
@@ -29,10 +29,11 @@ const NewReview = (props: IProps) => {
         comment: userComment
       };
       dispatch(sendReview(info, hotelId));
+      setUserComment('');
     }}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating" onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
-        setUserRating(+evt.target.value);
+        setUserRating(evt.target.value);
       }}>
         <input className="form__rating-input visually-hidden" name="rating" defaultValue={5} id="5-stars" type="radio" />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
@@ -65,7 +66,7 @@ const NewReview = (props: IProps) => {
           </svg>
         </label>
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={(evt) => {
+      <textarea className="reviews__textarea form__textarea" value={userComment} id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={(evt) => {
         setUserComment(evt.target.value)
       }}/>
       <div className="reviews__button-wrapper">

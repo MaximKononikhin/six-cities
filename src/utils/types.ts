@@ -52,7 +52,7 @@ export interface IComment {
 
 export interface IUserComment {
   comment: string,
-  rating: number
+  rating: string
 };
 
 
@@ -64,7 +64,7 @@ export interface IAppState {
   isAuthNeed: boolean,
   isLoginLoaded: boolean,
   isHotelsLoaded: boolean,
-  userInfo?: UserType
+  userInfo: UserType | null
 };
 
 export interface LoginType {

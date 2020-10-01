@@ -10,7 +10,7 @@ const inititalState: IAppState = {
   isAuthNeed: false,
   isLoginLoaded: false,
   isHotelsLoaded: false,
-  userInfo: undefined
+  userInfo: null
 };
 
 export const reducer = (state = inititalState, action: ActionType): IAppState => {
