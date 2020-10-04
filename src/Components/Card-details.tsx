@@ -1,6 +1,9 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useEffect } from 'react';
-import { HotelType } from '../utils/types';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { updateHotel } from '../Store/actions';
+import { HotelType, IAppState, ThunkDispatchType } from '../utils/types';
 import ReviewsContainer from './Reviews-container';
 import SmallHotelCard from './Small-card';
 
@@ -12,9 +15,24 @@ interface IProps {
 const CardDetails = (props: IProps) => {
   const {hotel, hotels} = props;
 
+  const isAuthNeed = useSelector<IAppState, boolean>(state => state.isAuthNeed);
+  const dispatch = useDispatch<ThunkDispatchType>();
+
+  const usePrevious = <T extends unknown>(value: T): T => {
+    const ref = useRef<T>(value);
+    
+    useEffect(() => {
+      ref.current = value;
+    }, [value]); 
+    
+    return ref.current;
+  };
+
+  const prevHotel = usePrevious(hotel);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [hotel]);
+    prevHotel?.id !== hotel?.id && window.scrollTo(0, 0);
+  }, [hotel, prevHotel]);
 
   if (!hotel || !hotels) {
     return null;
@@ -46,12 +64,19 @@ const CardDetails = (props: IProps) => {
                 <h1 className="property__name">
                   {hotel.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                {
+                  !isAuthNeed &&
+                  <button
+                  className={`property__bookmark-button button ${hotel.is_favorite && `property__bookmark-button--active `}`}
+                  type="button" onClick={() => {
+                    dispatch(updateHotel(hotel));
+                  }}>
+                    <svg className="property__bookmark-icon" width={31} height={33}>
+                      <use xlinkHref="#icon-bookmark" />
+                    </svg>
+                    <span className="visually-hidden">To bookmarks</span>
+                  </button>
+                }
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

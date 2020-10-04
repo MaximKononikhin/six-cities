@@ -1,16 +1,18 @@
 import { CITIES, SORTING_TYPES } from "../utils/constants";
 import { IAppState } from "../utils/types"
-import { ActionType, FILTER_HOTELS, LOAD_COMMENTS, LOAD_HOTELS, SET_AUTH, SORT_HOTELS, SET_LOGIN_LOADING, SET_HOTELS_LOADING, SET_USER_INFO } from "./actionTypes";
+import { ActionType, FILTER_HOTELS, LOAD_COMMENTS, LOAD_HOTELS, SET_AUTH, SORT_HOTELS,
+  SET_LOGIN_LOADING, SET_HOTELS_LOADING, SET_USER_INFO, LOAD_FAVORITES, UPDATE_HOTELS } from "./actionTypes";
 
 const inititalState: IAppState = {
   hotels: [],
   comments: [],
   activeFilter: CITIES[0],
   activeSorting: SORTING_TYPES[0],
-  isAuthNeed: false,
+  isAuthNeed: true,
   isLoginLoaded: false,
   isHotelsLoaded: false,
-  userInfo: null
+  userInfo: null,
+  favoriteHotels: []
 };
 
 export const reducer = (state = inititalState, action: ActionType): IAppState => {
@@ -63,6 +65,19 @@ export const reducer = (state = inititalState, action: ActionType): IAppState =>
         userInfo: action.payload
       };
     
+    case LOAD_FAVORITES:
+      return {
+        ...state,
+        favoriteHotels: action.payload
+      };
+
+    case UPDATE_HOTELS:
+      return {
+        ...state,
+        hotels: [...state.hotels.filter(hotel => hotel.id !== action.payload.id), action.payload],
+        favoriteHotels: [...state.favoriteHotels.filter(hotel => hotel.id !== action.payload.id)]
+      };
+
     default: return state;
   }
 }

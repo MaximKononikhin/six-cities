@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
+
 import { sortHotelsAction } from '../Store/actions';
 import { ActionType } from '../Store/actionTypes';
 import { SORTING_TYPES } from '../utils/constants';

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { ENTRY_POINT } from '../utils/constants';
 import { IAppState, UserType } from '../utils/types';
 
@@ -27,7 +28,7 @@ const UserLink = () => {
         <>
           <div style={{backgroundImage: `url(${ENTRY_POINT}${userInfo?.avatar_url})`}} className="header__avatar-wrapper user__avatar-wrapper">
           </div>
-          <span className="header__user-name user__name">{userInfo?.email}</span>
+          <Link to='/favorite' className="header__user-name user__name">{userInfo?.email}</Link>
         </>
       }
     </div>

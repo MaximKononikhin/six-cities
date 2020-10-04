@@ -1,5 +1,5 @@
 import { HotelType, IComment, IUserComment, LoginType, ThunkActionType, UserType } from "../utils/types";
-import { ActionType, FILTER_HOTELS, LOAD_COMMENTS, LOAD_HOTELS, SET_AUTH, SORT_HOTELS, SET_LOGIN_LOADING, SET_HOTELS_LOADING, SET_USER_INFO } from "./actionTypes";
+import { ActionType, FILTER_HOTELS, LOAD_COMMENTS, LOAD_HOTELS, SET_AUTH, SORT_HOTELS, SET_LOGIN_LOADING, SET_HOTELS_LOADING, SET_USER_INFO, LOAD_FAVORITES, UPDATE_HOTELS } from "./actionTypes";
 
 export const loadHotels = (): ThunkActionType => {
   return async (dispatch, getState, api) => {
@@ -23,7 +23,10 @@ export const checkAuth = (): ThunkActionType => {
     const response = await api.get('/login').finally(() => {
       dispatch(setLoginLoading(true));
     });
-    response && dispatch(setUserInfoAction(response.data));
+    if (response) {
+      dispatch(setAuthNeed(false));
+      dispatch(setUserInfoAction(response.data));
+    }
   }
 }
 
@@ -41,6 +44,20 @@ export const sendReview = (userComment: IUserComment, hotelId: number): ThunkAct
   return async (dispatch, getState, api) => {
     await api.post(`/comments/${hotelId}`, userComment);
     dispatch(loadReviews(hotelId));
+  }
+}
+
+export const loadFavorites = (): ThunkActionType => {
+  return async (dispatch, getState, api) => {
+    const response = await api.get('/favorite');
+    dispatch(loadFavoritesAction(response.data));
+  }
+}
+
+export const updateHotel = (hotel: HotelType): ThunkActionType => {
+  return async (dispatch, getState, api) => {
+    const resp =  await api.post(`/favorite/${hotel.id}/${Number(!hotel.is_favorite)}`);
+    dispatch(updateHotels(resp.data));
   }
 }
 
@@ -97,5 +114,19 @@ const setUserInfoAction = (userInfo: UserType): ActionType => {
   return {
     type: SET_USER_INFO,
     payload: userInfo
+  }
+};
+
+const loadFavoritesAction = (hotels: HotelType[]): ActionType => {
+  return {
+    type: LOAD_FAVORITES,
+    payload: hotels
+  }
+};
+
+const updateHotels = (hotel: HotelType): ActionType => {
+  return {
+    type: UPDATE_HOTELS,
+    payload: hotel
   }
 };

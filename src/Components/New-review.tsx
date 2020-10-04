@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { sendReview } from '../Store/actions';
 import { ThunkDispatchType } from '../utils/types';
 
@@ -16,7 +17,7 @@ const NewReview = (props: IProps) => {
 
   const validate = (): boolean => {
     if (+userRaing > 0 && userComment.length > 50) {
-      return false
+      return false;
     }
     return true;
   }

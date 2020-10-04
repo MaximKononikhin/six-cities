@@ -8,6 +8,8 @@ export const SET_AUTH = 'set-auth';
 export const SET_LOGIN_LOADING = 'set-login-loading';
 export const SET_HOTELS_LOADING = 'set-hotels-loading';
 export const SET_USER_INFO = 'set-user-info';
+export const LOAD_FAVORITES = 'load-favorites';
+export const UPDATE_HOTELS = 'update-hotels';
 
 interface LoadHotelsActionType {
   type: typeof LOAD_HOTELS,
@@ -49,5 +51,16 @@ interface SetUserInfoType {
   payload: UserType
 };
 
+interface LoadFavoritesType {
+  type: typeof LOAD_FAVORITES,
+  payload: HotelType[]
+};
+
+interface UpdateHotelsType {
+  type: typeof UPDATE_HOTELS,
+  payload: HotelType
+};
+
 export type ActionType = LoadHotelsActionType | LoadCommentsActionType | FilterHotelsActionType
- | SortHotelsActionType | SetAuthActionType | SetLoginLoadingType | SetHotelsLoadingType |SetUserInfoType;
+ | SortHotelsActionType | SetAuthActionType | SetLoginLoadingType | SetHotelsLoadingType
+  | SetUserInfoType | LoadFavoritesType | UpdateHotelsType;

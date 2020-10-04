@@ -1,6 +1,9 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { HotelType } from '../utils/types';
+
+import { updateHotel } from '../Store/actions';
+import { HotelType, IAppState, ThunkDispatchType } from '../utils/types';
 
 interface IProps {
   card: HotelType
@@ -8,6 +11,9 @@ interface IProps {
 
 const SmallHotelCard = (props: IProps) => {
   const {card} = props;
+
+  const isAuthNeed = useSelector<IAppState, boolean>(state => state.isAuthNeed);
+  const dispatch = useDispatch<ThunkDispatchType>();
 
   return (
     <article className="cities__place-card place-card">
@@ -27,12 +33,20 @@ const SmallHotelCard = (props: IProps) => {
             <b className="place-card__price-value">&euro;{card.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg style={{fill: card.is_favorite? '#4481c': undefined}} className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          {
+            !isAuthNeed &&
+            <button
+              className={`place-card__bookmark-button ${card.is_favorite && `place-card__bookmark-button--active`} button`}
+              type="button"
+              onClick={() => {
+                dispatch(updateHotel(card));
+            }}>
+              <svg style={{fill: card.is_favorite? '#4481c': undefined}} className="place-card__bookmark-icon" width="18" height="19">
+                <use xlinkHref="#icon-bookmark"></use>
+              </svg>
+              <span className="visually-hidden">To bookmarks</span>
+            </button>
+          }
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

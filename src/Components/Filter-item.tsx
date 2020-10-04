@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
+
 import { filterHotelsAction } from '../Store/actions';
 import { ActionType } from '../Store/actionTypes';
 import { IAppState } from '../utils/types';

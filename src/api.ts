@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+
 import { ENTRY_POINT } from './utils/constants';
-
-
 
 export const createAPI = (onUnauthorized: () => void) => {
   const api = axios.create({

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { IComment } from '../utils/types';
 
 const Review = (props: IComment) => {

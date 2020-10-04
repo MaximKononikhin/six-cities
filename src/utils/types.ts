@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
+
 import { ActionType } from "../Store/actionTypes";
 
 export interface HotelType {
@@ -64,7 +65,8 @@ export interface IAppState {
   isAuthNeed: boolean,
   isLoginLoaded: boolean,
   isHotelsLoaded: boolean,
-  userInfo: UserType | null
+  userInfo: UserType | null,
+  favoriteHotels: HotelType[]
 };
 
 export interface LoginType {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import leaflet from 'leaflet';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -13,8 +13,12 @@ interface IProps {
 const Map = (props: IProps) => {
   const {hotels} = props;
   const activeFilter = useSelector<IAppState, string>(state => state.activeFilter);
-  const filteredHotels = hotels.filter(hotel => hotel.city.name === activeFilter);
   const history = useHistory();
+
+  const filteredHotels = useMemo(() => {
+    return hotels.filter(hotel => hotel.city.name === activeFilter);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFilter]);
 
   useEffect(() => {
     const city: leaflet.LatLngTuple = [filteredHotels[0].city.location.latitude, filteredHotels[0].city.location.longitude];

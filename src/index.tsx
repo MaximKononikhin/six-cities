@@ -5,6 +5,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import {Provider} from 'react-redux';
+
 import { createAPI } from './api';
 import { reducer } from './Store/reducer';
 import { setAuthNeed } from './Store/actions';

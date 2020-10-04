@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import { HotelType, IAppState } from '../utils/types';
 import Filters from './Filters';
 import HotelList from './Hotels-list';

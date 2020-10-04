@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { CITIES } from '../utils/constants';
 import FilterItem from './Filter-item';
 

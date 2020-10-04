@@ -65,3 +65,14 @@
 .user__avatar-wrapper {
   border-radius: 50%;
 }
+
+
+.property__bookmark-button--active svg {
+  stroke: #4481c3;
+  fill: #4481c3;
+}
+
+.property__bookmark-button--active svg path {
+  stroke: #4481c3;
+  fill: #4481c3;
+}

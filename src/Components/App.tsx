@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
 import { checkAuth, loadHotels } from '../Store/actions';
 import { HotelType, IAppState, ThunkDispatchType } from '../utils/types';
 import CardDetails from './Card-details';
+import FavoritePage from './Favorite-page';
 import Header from './Header';
 import LoginPage from './Login-page';
 import Main from './Main';
@@ -30,6 +32,7 @@ const App = () => {
           />;
         }}/>
         <Route path='/login' render={() => <LoginPage/>}/>
+        <Route path='/favorite' render={() => <FavoritePage/>}/>
       </Switch>
     </Router>
   );
